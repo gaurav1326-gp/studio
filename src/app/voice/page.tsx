@@ -26,6 +26,8 @@ export default function VoicePage() {
   const { toast } = useToast();
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     // Check for SpeechRecognition API
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition) {
@@ -65,7 +67,7 @@ export default function VoicePage() {
     return () => {
       recognitionRef.current?.abort();
     };
-  }, [toast]);
+  }, []);
 
   const handleListen = () => {
     if (isListening) {
