@@ -35,12 +35,8 @@ const generateVideoFlow = ai.defineFlow(
   },
   async (input) => {
     let {operation} = await ai.generate({
-      model: 'googleai/veo-2.0-generate-001',
+      model: 'googleai/veo-3.0-generate-preview',
       prompt: input.prompt,
-      config: {
-        durationSeconds: 5,
-        aspectRatio: '16:9',
-      },
     });
 
     if (!operation) {
