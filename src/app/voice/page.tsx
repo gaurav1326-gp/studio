@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Loader2, Mic, Bot, User } from 'lucide-react';
 
@@ -28,10 +28,10 @@ export default function VoicePage() {
   const recognitionRef = useRef<any>(null); // Using any for SpeechRecognition
   const { toast } = useToast();
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    // Check for SpeechRecognition API
+  const initializeSpeechRecognition = useCallback(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition) {
       const recognition = new SpeechRecognition();
@@ -57,7 +57,7 @@ export default function VoicePage() {
       recognition.onend = () => {
         setIsListening(false);
       };
-
+      
       recognitionRef.current = recognition;
     } else {
         toast({
@@ -66,32 +66,50 @@ export default function VoicePage() {
             description: 'Your browser does not support the Web Speech API.',
         });
     }
+  }, [language, toast]);
 
+  useEffect(() => {
+    initializeSpeechRecognition();
     return () => {
       recognitionRef.current?.abort();
     };
-  }, [language]);
+  }, [initializeSpeechRecognition]);
 
   const handleListen = () => {
+    if (isLoading) return;
+
     if (isListening) {
       recognitionRef.current?.stop();
       setIsListening(false);
     } else {
-      if (recognitionRef.current) {
-        recognitionRef.current.start();
-        setIsListening(true);
-      } else {
+      if (!recognitionRef.current) {
          toast({
             variant: 'destructive',
             title: 'Speech Recognition Not Ready',
             description: 'Please wait a moment and try again.',
         });
+        initializeSpeechRecognition(); // Try to re-initialize
+        return;
+      }
+      try {
+        recognitionRef.current.start();
+        setIsListening(true);
+      } catch (error) {
+         toast({
+            variant: 'destructive',
+            title: 'Could not start listening',
+            description: 'Please ensure microphone permissions are granted.',
+        });
+        setIsListening(false);
       }
     }
   };
 
   const handleUserSpeech = async (text: string) => {
-    if (!text.trim()) return;
+    if (!text.trim()) {
+        setIsListening(false);
+        return;
+    };
 
     setConversation((prev) => [...prev, { speaker: 'user', text }]);
     setIsLoading(true);
@@ -174,7 +192,7 @@ export default function VoicePage() {
         <div className="flex-1 flex flex-col items-center justify-center py-8">
             <div className="w-full max-w-2xl h-[60vh] bg-card/50 rounded-lg p-4">
                  <ScrollArea className="h-full w-full pr-4">
-                    {conversation.length === 0 && !isListening && (
+                    {conversation.length === 0 && !isListening && !isLoading && (
                         <p className="text-center text-muted-foreground h-full flex items-center justify-center">Your conversation will appear here.</p>
                     )}
                     {conversation.map(renderTurn)}
