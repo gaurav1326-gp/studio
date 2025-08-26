@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'CognitoVoice',
+  title: 'GWGP',
   description: 'Your futuristic AI assistant for coding, health, and study questions.',
 };
 
