@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
 import { Logo } from '@/components/logo';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { languageCodes } from '@/lib/language-codes';
 
 interface ConversationTurn {
   speaker: 'user' | 'ai';
@@ -20,6 +22,7 @@ export default function VoicePage() {
   const [conversation, setConversation] = useState<ConversationTurn[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [language, setLanguage] = useState('en-US');
   
   const audioRef = useRef<HTMLAudioElement>(null);
   const recognitionRef = useRef<any>(null); // Using any for SpeechRecognition
@@ -34,7 +37,7 @@ export default function VoicePage() {
       const recognition = new SpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = false;
-      recognition.lang = 'en-US';
+      recognition.lang = language;
 
       recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
@@ -67,7 +70,7 @@ export default function VoicePage() {
     return () => {
       recognitionRef.current?.abort();
     };
-  }, []);
+  }, [language]);
 
   const handleListen = () => {
     if (isListening) {
@@ -146,10 +149,26 @@ export default function VoicePage() {
               Voice Assistant
             </h1>
             <p className="text-sm text-muted-foreground">
-              Click the microphone to speak.
+              Select a language and click the microphone to speak.
             </p>
           </div>
-          <Logo className="h-12 w-12" />
+          <div className="flex items-center gap-4">
+             <Select value={language} onValueChange={setLanguage}>
+              <SelectTrigger className="w-[280px]">
+                <SelectValue placeholder="Select a language" />
+              </SelectTrigger>
+              <SelectContent>
+                <ScrollArea className="h-72">
+                  {Object.entries(languageCodes).map(([code, name]) => (
+                    <SelectItem key={code} value={code}>
+                      {name}
+                    </SelectItem>
+                  ))}
+                </ScrollArea>
+              </SelectContent>
+            </Select>
+            <Logo className="h-12 w-12" />
+          </div>
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center py-8">
