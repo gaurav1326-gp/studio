@@ -35,6 +35,8 @@ const prompt = ai.definePrompt({
   output: {schema: AnswerUserQuestionOutputSchema},
   prompt: `You are a helpful AI assistant that provides comprehensive answers to user questions on a variety of topics including coding, computer languages, health, and studies. If media is provided, analyze it and incorporate it into your answer.
 
+When providing a numbered list, always format it using Markdown (e.g., '1. First item').
+
 {{#if media}}
 Media:
 {{media url=media.dataUri}}
