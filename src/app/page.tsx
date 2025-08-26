@@ -170,42 +170,42 @@ export default function Home() {
 
             <div className="w-full max-w-3xl flex-grow flex flex-col justify-center my-8 mx-auto">
               <div className="w-full rounded-lg bg-gradient-to-br from-primary/50 via-purple-600/50 to-accent/50 p-0.5 shadow-2xl shadow-primary/20">
-                <Card className="h-full w-full rounded-[7px] bg-card/80 backdrop-blur-sm">
-                  <CardContent className="p-4 md:p-6 min-h-[200px] flex items-center justify-center relative">
-                    <ScrollArea className="h-full max-h-[40vh] w-full pr-4">
-                      {isLoading ? (
-                        <div className="flex items-center justify-center h-full">
-                          <Loader2 className="h-8 w-8 animate-spin text-accent" />
-                        </div>
-                      ) : answer ? (
-                        <Typewriter text={answer} speed={10}/>
-                      ) : (
-                        <p className="text-center text-muted-foreground">The answer to your query will appear here.</p>
-                      )}
-                    </ScrollArea>
-                    {answer && !isLoading && (
-                      <div className="absolute bottom-4 right-4">
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="rounded-full text-accent hover:bg-accent/20 hover:text-accent"
-                          onClick={handlePlayAudio}
-                          disabled={isSynthesizing}
-                          aria-label={isPlaying ? 'Pause audio' : 'Play audio'}
-                        >
-                          <IconGlowWrapper>
-                            {isSynthesizing ? (
-                              <Loader2 className="h-5 w-5 animate-spin" />
-                            ) : isPlaying ? (
-                              <Square className="h-5 w-5" />
-                            ) : (
-                              <Play className="h-5 w-5" />
-                            )}
-                          </IconGlowWrapper>
-                        </Button>
-                      </div>
-                    )}
-                  </CardContent>
+                <Card className="h-full w-full rounded-[7px] bg-card/80 backdrop-blur-sm relative">
+                  <ScrollArea className="absolute inset-0 h-full w-full">
+                    <CardContent className="p-4 md:p-6 min-h-[200px] flex items-center justify-center">
+                        {isLoading ? (
+                          <div className="flex items-center justify-center h-full">
+                            <Loader2 className="h-8 w-8 animate-spin text-accent" />
+                          </div>
+                        ) : answer ? (
+                          <Typewriter text={answer} speed={10}/>
+                        ) : (
+                          <p className="text-center text-muted-foreground">The answer to your query will appear here.</p>
+                        )}
+                    </CardContent>
+                  </ScrollArea>
+                  {answer && !isLoading && (
+                    <div className="absolute bottom-4 right-4 z-10">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="rounded-full text-accent hover:bg-accent/20 hover:text-accent"
+                        onClick={handlePlayAudio}
+                        disabled={isSynthesizing}
+                        aria-label={isPlaying ? 'Pause audio' : 'Play audio'}
+                      >
+                        <IconGlowWrapper>
+                          {isSynthesizing ? (
+                            <Loader2 className="h-5 w-5 animate-spin" />
+                          ) : isPlaying ? (
+                            <Square className="h-5 w-5" />
+                          ) : (
+                            <Play className="h-5 w-5" />
+                          )}
+                        </IconGlowWrapper>
+                      </Button>
+                    </div>
+                  )}
                 </Card>
               </div>
             </div>
