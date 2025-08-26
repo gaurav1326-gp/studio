@@ -43,7 +43,7 @@ const editImageFlow = ai.defineFlow(
         { text: input.prompt },
       ],
       config: {
-        responseModalities: ['IMAGE'],
+        responseModalities: ['TEXT', 'IMAGE'],
       },
     });
     
