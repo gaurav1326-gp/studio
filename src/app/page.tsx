@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Loader2, Mic, Play, SendHorizonal, Square, Lightbulb, Image as ImageIcon, Video, XCircle } from 'lucide-react';
+import Link from 'next/link';
+import { Loader2, Mic, Play, SendHorizonal, Square, Lightbulb, Image as ImageIcon, Video, XCircle, Wand2 } from 'lucide-react';
 
 import { answerUserQuestion } from '@/ai/flows/answer-user-question';
 import { synthesizeTextToSpeech } from '@/ai/flows/synthesize-text-to-speech';
@@ -294,6 +295,19 @@ export default function Home() {
                 </Card>
               ))}
             </div>
+            <div className="border-t border-border/50 my-2"></div>
+            <h2 className="text-lg font-semibold text-foreground flex items-center gap-2 uppercase">
+              <Wand2 className="text-accent h-5 w-5" />
+              Tools
+            </h2>
+             <Card
+                className="p-3.5 cursor-pointer hover:bg-card/90 transition-colors bg-card/70 border-border/70"
+              >
+                <Link href="/edit" className="flex items-center gap-2">
+                  <ImageIcon className="text-accent/80" />
+                  <p className="text-sm text-muted-foreground">AI Image Editor</p>
+                </Link>
+              </Card>
           </aside>
         </div>
         <audio ref={audioRef} />
