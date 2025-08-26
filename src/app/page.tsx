@@ -156,7 +156,7 @@ export default function Home() {
       <main className="container mx-auto flex h-screen p-4 md:p-8">
         <div className="flex flex-1 gap-8">
           <div className="flex flex-1 flex-col justify-between">
-            <header className="flex flex-col items-center text-center">
+            <header className="flex flex-col items-start text-left">
               <Logo />
               <h1 className="mt-4 text-4xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-200 to-gray-400 sm:text-5xl uppercase">
                 GWGP
