@@ -126,7 +126,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="fixed inset-0 -z-10 h-full w-full bg-background bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,hsl(var(--primary)/0.3),rgba(255,255,255,0))]"></div>
+      <div className="fixed inset-0 -z-10 h-full w-full bg-background bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,hsl(var(--primary)/0.2),rgba(255,255,255,0))]"></div>
       <main className="container mx-auto flex h-screen p-4 md:p-8">
         <div className="flex flex-1 gap-8">
           <div className="flex flex-1 flex-col justify-between">
