@@ -132,7 +132,7 @@ export default function Home() {
           <div className="flex flex-1 flex-col justify-between">
             <header className="flex flex-col items-center text-center">
               <Logo />
-              <h1 className="mt-4 text-4xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-200 to-gray-400 sm:text-5xl">
+              <h1 className="mt-4 text-4xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-200 to-gray-400 sm:text-5xl uppercase">
                 GWGP
               </h1>
               <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
@@ -227,7 +227,7 @@ export default function Home() {
           </div>
 
           <aside className="hidden md:flex flex-col gap-4 w-80">
-            <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-foreground flex items-center gap-2 uppercase">
               <Lightbulb className="text-accent h-5 w-5" />
               Suggestions
             </h2>

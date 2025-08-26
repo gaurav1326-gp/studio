@@ -17,8 +17,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        body: ['Geist', 'sans-serif'],
-        headline: ['Geist', 'sans-serif'],
+        body: ['"Space Mono"', 'monospace'],
+        headline: ['"Space Mono"', 'monospace'],
         code: ['monospace'],
       },
       colors: {
