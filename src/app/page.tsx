@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Loader2, Mic, Play, SendHorizonal, Square, Lightbulb } from 'lucide-react';
+import { Loader2, Mic, Play, SendHorizonal, Square, Lightbulb, Image as ImageIcon, Video, XCircle } from 'lucide-react';
 
 import { answerUserQuestion } from '@/ai/flows/answer-user-question';
 import { synthesizeTextToSpeech } from '@/ai/flows/synthesize-text-to-speech';
@@ -13,6 +13,11 @@ import { useToast } from '@/hooks/use-toast';
 import { Typewriter } from '@/components/typewriter';
 import { Logo } from '@/components/logo';
 
+type Attachment = {
+  type: 'image' | 'video';
+  dataUri: string;
+};
+
 export default function Home() {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
@@ -21,8 +26,11 @@ export default function Home() {
   const [isSynthesizing, setIsSynthesizing] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioDataUri, setAudioDataUri] = useState<string | null>(null);
+  const [attachment, setAttachment] = useState<Attachment | null>(null);
 
   const audioRef = useRef<HTMLAudioElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const videoInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -36,8 +44,19 @@ export default function Home() {
     }
   }, []);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, type: 'image' | 'video') => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setAttachment({ type, dataUri: event.target?.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const askQuestion = async (text: string) => {
-    if (!text.trim() || isLoading) return;
+    if ((!text.trim() && !attachment) || isLoading) return;
 
     setQuestion(text);
     setIsLoading(true);
@@ -46,7 +65,11 @@ export default function Home() {
     setIsPlaying(false);
 
     try {
-      const result = await answerUserQuestion({ question: text });
+      const input: { question: string, media?: Attachment } = { question: text };
+      if (attachment) {
+        input.media = attachment;
+      }
+      const result = await answerUserQuestion(input);
       setAnswer(result.answer);
     } catch (error) {
       console.error(error);
@@ -57,6 +80,8 @@ export default function Home() {
       });
     } finally {
       setIsLoading(false);
+      setAttachment(null);
+      setQuestion('');
     }
   }
 
@@ -183,12 +208,30 @@ export default function Home() {
             </div>
 
             <form onSubmit={handleSubmit} className="w-full max-w-3xl space-y-4 mx-auto">
+              {attachment && (
+                <div className="relative mx-auto max-w-xs">
+                  {attachment.type === 'image' ? (
+                    <img src={attachment.dataUri} alt="Preview" className="rounded-md max-h-40" />
+                  ) : (
+                    <video src={attachment.dataUri} controls className="rounded-md max-h-40" />
+                  )}
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute -top-2 -right-2 rounded-full h-6 w-6 bg-background/50 hover:bg-background"
+                    onClick={() => setAttachment(null)}
+                  >
+                    <XCircle className="h-5 w-5 text-destructive" />
+                  </Button>
+                </div>
+              )}
               <div className="relative">
                 <Textarea
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
                   placeholder="Ask me anything..."
-                  className="w-full rounded-lg border-2 bg-card/80 p-4 pr-24 text-base backdrop-blur-sm focus:ring-accent focus:border-accent"
+                  className="w-full rounded-lg border-2 bg-card/80 p-4 pr-36 text-base backdrop-blur-sm focus:ring-accent focus:border-accent"
                   rows={2}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
@@ -197,7 +240,16 @@ export default function Home() {
                     }
                   }}
                 />
-                <div className="absolute bottom-3 right-3 flex items-center space-x-2">
+                <div className="absolute bottom-3 right-3 flex items-center space-x-1">
+                  <input type="file" accept="image/*" ref={imageInputRef} onChange={(e) => handleFileChange(e, 'image')} className="hidden" />
+                  <input type="file" accept="video/*" ref={videoInputRef} onChange={(e) => handleFileChange(e, 'video')} className="hidden" />
+
+                  <Button type="button" size="icon" variant="ghost" onClick={() => imageInputRef.current?.click()} className="rounded-full hover:bg-accent/20" aria-label="Add image">
+                    <ImageIcon className="h-5 w-5 text-accent" />
+                  </Button>
+                  <Button type="button" size="icon" variant="ghost" onClick={() => videoInputRef.current?.click()} className="rounded-full hover:bg-accent/20" aria-label="Add video">
+                    <Video className="h-5 w-5 text-accent" />
+                  </Button>
                   <Button
                     type="button"
                     size="icon"
@@ -212,7 +264,7 @@ export default function Home() {
                     type="submit"
                     size="icon"
                     className="rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
-                    disabled={isLoading || !question.trim()}
+                    disabled={isLoading || (!question.trim() && !attachment)}
                     aria-label="Send question"
                   >
                     {isLoading ? (

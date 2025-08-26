@@ -13,6 +13,10 @@ import {z} from 'genkit';
 
 const AnswerUserQuestionInputSchema = z.object({
   question: z.string().describe('The question the user is asking.'),
+  media: z.optional(z.object({
+    dataUri: z.string().describe("A media file (image or video), as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."),
+    type: z.enum(['image', 'video']).describe('The type of media.'),
+  })),
 });
 export type AnswerUserQuestionInput = z.infer<typeof AnswerUserQuestionInputSchema>;
 
@@ -29,7 +33,14 @@ const prompt = ai.definePrompt({
   name: 'answerUserQuestionPrompt',
   input: {schema: AnswerUserQuestionInputSchema},
   output: {schema: AnswerUserQuestionOutputSchema},
-  prompt: `You are a helpful AI assistant that provides comprehensive answers to user questions on a variety of topics including coding, computer languages, health, and studies.\n\nQuestion: {{{question}}}`, 
+  prompt: `You are a helpful AI assistant that provides comprehensive answers to user questions on a variety of topics including coding, computer languages, health, and studies. If media is provided, analyze it and incorporate it into your answer.
+
+{{#if media}}
+Media:
+{{media url=media.dataUri}}
+{{/if}}
+
+Question: {{{question}}}`, 
 });
 
 const answerUserQuestionFlow = ai.defineFlow(
