@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 type TypewriterProps = {
   text: string;
@@ -11,11 +13,11 @@ export function Typewriter({ text, speed = 20 }: TypewriterProps) {
   const [displayedText, setDisplayedText] = useState('');
 
   useEffect(() => {
-    setDisplayedText('');
+    setDisplayedText(''); // Reset on new text
     let i = 0;
     const timer = setInterval(() => {
       if (i < text.length) {
-        setDisplayedText((prev) => prev + text.charAt(i));
+        setDisplayedText(text.substring(0, i + 1));
         i++;
       } else {
         clearInterval(timer);
@@ -27,5 +29,12 @@ export function Typewriter({ text, speed = 20 }: TypewriterProps) {
     };
   }, [text, speed]);
 
-  return <p className="whitespace-pre-wrap text-foreground">{displayedText}<span className="animate-pulse">|</span></p>;
+  return (
+    <ReactMarkdown
+      className="prose prose-invert max-w-none"
+      remarkPlugins={[remarkGfm]}
+    >
+      {displayedText}
+    </ReactMarkdown>
+  );
 }

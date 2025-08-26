@@ -65,4 +65,13 @@
   body {
     @apply bg-background text-foreground;
   }
+  .prose {
+    @apply text-foreground;
+  }
+  .prose code {
+    @apply rounded bg-muted px-1 py-0.5 font-mono text-sm;
+  }
+  .prose pre {
+    @apply rounded-md bg-card p-4 text-sm;
+  }
 }

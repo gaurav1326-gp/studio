@@ -178,7 +178,7 @@ export default function Home() {
                           <Loader2 className="h-8 w-8 animate-spin text-accent" />
                         </div>
                       ) : answer ? (
-                        <Typewriter text={answer} />
+                        <Typewriter text={answer} speed={10}/>
                       ) : (
                         <p className="text-center text-muted-foreground">The answer to your query will appear here.</p>
                       )}
