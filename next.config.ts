@@ -29,6 +29,7 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '10mb', // Allow larger payloads for potential video uploads
       executionTimeout: 120, // Increase timeout for long-running video generation
     },
+    allowedDevOrigins: ["*.cloudworkstations.dev"],
   },
 };
 
