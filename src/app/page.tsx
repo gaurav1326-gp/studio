@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { Loader2, Mic, Play, SendHorizonal, Square, Lightbulb, Image as ImageIcon, Video, XCircle, Wand2 } from 'lucide-react';
+import { Loader2, Mic, Play, SendHorizonal, Square, Lightbulb, Image as ImageIcon, Video, XCircle, Wand2, Headset } from 'lucide-react';
 
 import { answerUserQuestion } from '@/ai/flows/answer-user-question';
 import { synthesizeTextToSpeech } from '@/ai/flows/synthesize-text-to-speech';
@@ -156,7 +156,7 @@ export default function Home() {
       <main className="container mx-auto flex h-screen p-4 md:p-8">
         <div className="flex flex-1 gap-8">
           <div className="flex flex-1 flex-col justify-between">
-            <header className="flex items-center gap-4 text-left">
+          <header className="flex items-center gap-4 text-left">
               <Logo />
               <div>
                 <h1 className="text-4xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-200 to-gray-400 sm:text-5xl uppercase">
@@ -308,6 +308,14 @@ export default function Home() {
                 <Link href="/edit" className="flex items-center gap-2">
                   <ImageIcon className="text-accent/80" />
                   <p className="text-sm text-muted-foreground">AI Image Editor</p>
+                </Link>
+              </Card>
+               <Card
+                className="p-3.5 cursor-pointer hover:bg-card/90 transition-colors bg-card/70 border-border/70"
+              >
+                <Link href="/voice" className="flex items-center gap-2">
+                  <Headset className="text-accent/80" />
+                  <p className="text-sm text-muted-foreground">Voice Assistant</p>
                 </Link>
               </Card>
           </aside>
