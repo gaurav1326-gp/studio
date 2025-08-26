@@ -141,8 +141,8 @@ export default function Home() {
             </header>
 
             <div className="w-full max-w-3xl flex-grow flex flex-col justify-center my-8 mx-auto">
-              <div className="w-full rounded-lg bg-gradient-to-br from-primary via-purple-600 to-accent p-0.5 shadow-2xl shadow-primary/20">
-                <Card className="h-full w-full rounded-[7px]">
+              <div className="w-full rounded-lg bg-gradient-to-br from-primary/50 via-purple-600/50 to-accent/50 p-0.5 shadow-2xl shadow-primary/20">
+                <Card className="h-full w-full rounded-[7px] bg-card/80 backdrop-blur-sm">
                   <CardContent className="p-4 md:p-6 min-h-[200px] flex items-center justify-center relative">
                     <ScrollArea className="h-full max-h-[40vh] w-full pr-4">
                       {isLoading ? (
