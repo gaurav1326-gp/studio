@@ -153,8 +153,8 @@ export default function Home() {
   return (
     <>
       <div className="fixed inset-0 -z-10 h-full w-full bg-background bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,hsl(var(--primary)/0.2),rgba(255,255,255,0))]"></div>
-      <main className="container mx-auto flex h-screen p-4 md:p-8">
-        <div className="flex flex-1 gap-8">
+      <main className="container mx-auto flex h-screen flex-col p-4 md:p-8">
+        <div className="flex flex-col md:flex-row flex-1 gap-8">
           <div className="flex flex-1 flex-col justify-between">
           <header className="flex items-center gap-4 text-left">
               <Logo />
@@ -281,7 +281,7 @@ export default function Home() {
             </form>
           </div>
 
-          <aside className="hidden md:flex flex-col gap-4 w-80">
+          <aside className="hidden md:flex flex-col gap-4 w-full md:w-80">
             <h2 className="text-lg font-semibold text-foreground flex items-center gap-2 uppercase">
               <Lightbulb className="text-accent h-5 w-5" />
               Suggestions

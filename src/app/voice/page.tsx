@@ -156,7 +156,7 @@ export default function VoicePage() {
     <>
       <div className="fixed inset-0 -z-10 h-full w-full bg-background bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,hsl(var(--primary)/0.2),rgba(255,255,255,0))]"></div>
       <main className="container mx-auto flex h-screen flex-col p-4 md:p-8">
-        <header className="flex items-center justify-between">
+        <header className="flex items-center justify-between flex-wrap gap-4">
           <Button asChild variant="ghost" size="icon">
             <Link href="/">
               <ArrowLeft />
@@ -170,9 +170,9 @@ export default function VoicePage() {
               Select a language and click the microphone to speak.
             </p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 mx-auto md:mx-0">
              <Select value={language} onValueChange={setLanguage}>
-              <SelectTrigger className="w-[280px]">
+              <SelectTrigger className="w-full sm:w-[280px]">
                 <SelectValue placeholder="Select a language" />
               </SelectTrigger>
               <SelectContent>
@@ -185,7 +185,7 @@ export default function VoicePage() {
                 </ScrollArea>
               </SelectContent>
             </Select>
-            <Logo className="h-12 w-12" />
+            <Logo className="h-12 w-12 hidden sm:flex" />
           </div>
         </header>
 
