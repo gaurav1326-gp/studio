@@ -13,6 +13,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Typewriter } from '@/components/typewriter';
 import { Logo } from '@/components/logo';
+import { Clock } from '@/components/clock';
 
 type Attachment = {
   type: 'image' | 'video';
@@ -156,16 +157,19 @@ export default function Home() {
       <main className="container mx-auto flex h-screen flex-col p-4 md:p-8">
         <div className="flex flex-col md:flex-row flex-1 gap-8">
           <div className="flex flex-1 flex-col justify-between">
-          <header className="flex items-center gap-4 text-left">
-              <Logo />
-              <div>
-                <h1 className="text-4xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-200 to-gray-400 sm:text-5xl uppercase">
-                  GWGP
-                </h1>
-                <p className="mt-1 text-lg text-muted-foreground max-w-2xl">
-                  Your futuristic AI assistant. Ask me about coding, computer languages, health, and studies.
-                </p>
+          <header className="flex items-start justify-between gap-4 text-left">
+              <div className='flex items-center gap-4'>
+                <Logo />
+                <div>
+                  <h1 className="text-4xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-200 to-gray-400 sm:text-5xl uppercase">
+                    GWGP
+                  </h1>
+                  <p className="mt-1 text-lg text-muted-foreground max-w-2xl">
+                    Your futuristic AI assistant.
+                  </p>
+                </div>
               </div>
+              <Clock />
             </header>
 
             <div className="w-full max-w-3xl flex-grow flex flex-col justify-center my-8 mx-auto">
