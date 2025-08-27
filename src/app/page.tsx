@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { Loader2, Mic, Play, SendHorizonal, Square, Lightbulb, Image as ImageIcon, Video, XCircle, Wand2, Headset, Search } from 'lucide-react';
+import { Loader2, Mic, Play, SendHorizonal, Square, Lightbulb, Image as ImageIcon, Video, XCircle, Wand2, Headset, Search, Newspaper } from 'lucide-react';
 
 import { answerUserQuestion } from '@/ai/flows/answer-user-question';
 import { synthesizeTextToSpeech } from '@/ai/flows/synthesize-text-to-speech';
@@ -201,7 +201,7 @@ export default function Home() {
                         <IconGlowWrapper>
                           {isSynthesizing ? (
                             <Loader2 className="h-5 w-5 animate-spin" />
-                          ) : isPlaying ? (
+                          ) : isisPlaying ? (
                             <Square className="h-5 w-5" />
                           ) : (
                             <Play className="h-5 w-5" />
@@ -328,6 +328,14 @@ export default function Home() {
                 <Link href="/search" className="flex items-center gap-2">
                   <Search className="text-accent/80" />
                   <p className="text-sm text-muted-foreground">Real-time Search</p>
+                </Link>
+              </Card>
+              <Card
+                className="p-3.5 cursor-pointer hover:bg-card/90 transition-colors bg-card/70 border-border/70"
+              >
+                <Link href="/news" className="flex items-center gap-2">
+                  <Newspaper className="text-accent/80" />
+                  <p className="text-sm text-muted-foreground">Daily Newspaper</p>
                 </Link>
               </Card>
           </aside>
