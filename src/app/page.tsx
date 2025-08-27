@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
@@ -200,7 +201,7 @@ export default function Home() {
                       <IconGlowWrapper>
                         {isSynthesizing ? (
                           <Loader2 className="h-5 w-5 animate-spin" />
-                        ) : isisPlaying ? (
+                        ) : isPlaying ? (
                           <Square className="h-5 w-5" />
                         ) : (
                           <Play className="h-5 w-5" />
